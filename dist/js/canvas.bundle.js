@@ -119,8 +119,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 console.log(_img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 var gravity = 1.5;
 
 var Player = /*#__PURE__*/function () {
@@ -170,9 +170,9 @@ var Platform = /*#__PURE__*/function () {
       x: x,
       y: y
     };
-    this.width = 200;
-    this.height = 20;
     this.image = image;
+    this.width = image.width;
+    this.height = image.height;
   }
 
   _createClass(Platform, [{
@@ -191,12 +191,12 @@ var image = new Image();
 image.src = _img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"];
 var player = new Player();
 var platforms = [new Platform({
-  x: 200,
-  y: 400,
+  x: -1,
+  y: 470,
   image: image
 }), new Platform({
-  x: 500,
-  y: 600,
+  x: image.width - 3,
+  y: 470,
   image: image
 })];
 var keys = {
@@ -211,11 +211,12 @@ var scrollOffset = 0; //  -----------  ANIMATION    -------
 
 function animate() {
   requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
-  player.update();
+  c.fillStyle = 'white';
+  c.fillRect(0, 0, canvas.width, canvas.height);
   platforms.forEach(function (platform) {
     platform.draw();
   });
+  player.update();
 
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = 5;
