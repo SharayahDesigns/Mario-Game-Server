@@ -139,12 +139,18 @@ function animate() {
       scrollOffset += 5;
       platforms.forEach((platform) => {
         platform.position.x -= 5;
-      });
+      })
+      genericObject.forEach((genericObject) => {
+      genericObject.position.x -= 3
+      })
     } else if (keys.left.pressed) {
       scrollOffset -= 5;
       platforms.forEach((platform) => {
         platform.position.x += 5;
       });
+      genericObject.forEach((genericObject) => {
+      genericObject.position.x += 3
+      })
     }
   }
 

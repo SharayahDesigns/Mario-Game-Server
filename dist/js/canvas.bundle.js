@@ -303,10 +303,16 @@ function animate() {
       platforms.forEach(function (platform) {
         platform.position.x -= 5;
       });
+      genericObject.forEach(function (genericObject) {
+        genericObject.position.x -= 3;
+      });
     } else if (keys.left.pressed) {
       scrollOffset -= 5;
       platforms.forEach(function (platform) {
         platform.position.x += 5;
+      });
+      genericObject.forEach(function (genericObject) {
+        genericObject.position.x += 3;
       });
     }
   } // Platform collision detection
