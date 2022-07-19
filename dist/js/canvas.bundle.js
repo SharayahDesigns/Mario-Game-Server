@@ -86,6 +86,32 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/img/background.png":
+/*!********************************!*\
+  !*** ./src/img/background.png ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "072d51bcc9c09311d4c2a6708b05bddc.png");
+
+/***/ }),
+
+/***/ "./src/img/hills.png":
+/*!***************************!*\
+  !*** ./src/img/hills.png ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "cfffe4c371f5e11d372b398a87c51dd0.png");
+
+/***/ }),
+
 /***/ "./src/img/platform.png":
 /*!******************************!*\
   !*** ./src/img/platform.png ***!
@@ -109,6 +135,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _img_platform_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/platform.png */ "./src/img/platform.png");
+/* harmony import */ var _img_hills_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/hills.png */ "./src/img/hills.png");
+/* harmony import */ var _img_background_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/background.png */ "./src/img/background.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -116,7 +144,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
-console.log(_img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
 canvas.width = 1024;
@@ -178,26 +207,67 @@ var Platform = /*#__PURE__*/function () {
   _createClass(Platform, [{
     key: "draw",
     value: function draw() {
-      // c.fillStyle = "blue";
-      // c.fillRect(this.position.x, this.position.y, this.width, this.height);
       c.drawImage(this.image, this.position.x, this.position.y);
     }
   }]);
 
   return Platform;
-}();
+}(); //----------------Decorational Items ----------------------
 
-var image = new Image();
-image.src = _img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"];
+
+var GenericObject = /*#__PURE__*/function () {
+  function GenericObject(_ref2) {
+    var x = _ref2.x,
+        y = _ref2.y,
+        image = _ref2.image;
+
+    _classCallCheck(this, GenericObject);
+
+    this.position = {
+      x: x,
+      y: y
+    };
+    this.image = image;
+    this.width = image.width;
+    this.height = image.height;
+  }
+
+  _createClass(GenericObject, [{
+    key: "draw",
+    value: function draw() {
+      c.drawImage(this.image, this.position.x, this.position.y);
+    }
+  }]);
+
+  return GenericObject;
+}(); //---------------------------------------------
+
+
+function createImage(imageSrc) {
+  var image = new Image();
+  image.src = imageSrc;
+  return image;
+}
+
+var platformImage = createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var player = new Player();
 var platforms = [new Platform({
   x: -1,
   y: 470,
-  image: image
+  image: platformImage
 }), new Platform({
-  x: image.width - 3,
+  x: platformImage.width - 3,
   y: 470,
-  image: image
+  image: platformImage
+})];
+var genericObject = [new GenericObject({
+  x: -1,
+  y: -1,
+  image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_2__["default"])
+}), new GenericObject({
+  x: -1,
+  y: -1,
+  image: createImage(_img_hills_png__WEBPACK_IMPORTED_MODULE_1__["default"])
 })];
 var keys = {
   right: {
@@ -211,8 +281,11 @@ var scrollOffset = 0; //  -----------  ANIMATION    -------
 
 function animate() {
   requestAnimationFrame(animate);
-  c.fillStyle = 'white';
+  c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
+  genericObject.forEach(function (genericObject) {
+    genericObject.draw();
+  });
   platforms.forEach(function (platform) {
     platform.draw();
   });
@@ -246,13 +319,13 @@ function animate() {
   });
 
   if (scrollOffset > 2000) {
-    console.log('you WIN!!!!');
+    console.log("you WIN!!!!");
   }
 }
 
 animate();
-addEventListener("keydown", function (_ref2) {
-  var keyCode = _ref2.keyCode;
+addEventListener("keydown", function (_ref3) {
+  var keyCode = _ref3.keyCode;
 
   // console.log(keyCode)
   switch (keyCode) {
@@ -278,8 +351,8 @@ addEventListener("keydown", function (_ref2) {
 
   console.log(keys.right.pressed);
 });
-addEventListener("keyup", function (_ref3) {
-  var keyCode = _ref3.keyCode;
+addEventListener("keyup", function (_ref4) {
+  var keyCode = _ref4.keyCode;
 
   // console.log(keyCode)
   switch (keyCode) {
